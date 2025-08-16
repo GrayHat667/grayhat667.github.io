@@ -8,41 +8,32 @@
   <style>
     :root { --bg: #000; --fg: #fff; }
 
-    /* Monocraft Regular (CDN). If you prefer to self-host, see the comment below. */
     @font-face {
       font-family: "Monocraft";
       src: url("https://cdn.jsdelivr.net/gh/IdreesInc/Monocraft/Monocraft.ttf") format("truetype");
       font-display: swap;
     }
 
-    /*
-      If the font above doesn't load in your environment, self-host it:
-      1) Download Monocraft.woff2 (and optionally Monocraft.woff) from the official Monocraft repo.
-      2) Add the files to your site root (same folder as this index.html).
-      3) Replace the @font-face block above with:
-
-      @font-face {
-        font-family: "Monocraft";
-        src: url("Monocraft.woff2") format("woff2"),
-             url("Monocraft.woff") format("woff");
-        font-display: swap;
-      }
-    */
-
-    html, body { height: 100%; }
+    html, body { height: 100%; margin: 0; }
     body {
-      margin: 0;
       background: var(--bg);
       color: var(--fg);
-      display: grid;
-      place-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
     }
 
-    .main {
+    main {
+      flex: 1;
       display: grid;
       place-items: center;
       gap: clamp(12px, 3vh, 24px);
+    }
+
+    footer {
+      margin-bottom: 20px;
     }
 
     #easter-egg {
@@ -65,12 +56,12 @@
       width: 360px;
       height: 360px;
       position: relative;
-      border-radius: 24px; /* If your logo is a perfect circle, set to 50% */
+      border-radius: 24px;
       border: 2px solid transparent;
       transition: border-color .18s ease, box-shadow .18s ease, transform .1s ease;
       display: grid;
       place-items: center;
-      isolation: isolate; /* particles above logo */
+      isolation: isolate;
       outline: none;
       background: transparent;
       padding: 0;
@@ -86,11 +77,11 @@
     .logo {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* Keep aspect ratio */
+      object-fit: contain;
       display: block;
       user-select: none;
       -webkit-user-drag: none;
-      pointer-events: none; /* Clicks go to the button/frame */
+      pointer-events: none;
     }
 
     #particleLayer {
@@ -126,7 +117,6 @@
 
     .logo-frame.wiggle { animation: wiggle 420ms ease; }
 
-    /* Respect users who prefer reduced motion */
     @media (prefers-reduced-motion: reduce) {
       .logo-frame { transition: none; }
       .logo-frame.wiggle { animation: none; }
@@ -135,15 +125,20 @@
   </style>
 </head>
 <body>
-  <main class="main">
-    <h1 id="easter-egg" aria-live="polite">Don't you have anything better to do?</h1>
+  <main>
+    <h1 id="easter-egg">Don't you have anything better to do?</h1>
 
     <button id="logoBtn" class="logo-frame" aria-label="Click the logo">
-      <!-- Replace logo.png with your actual filename if different. Keep it 360×360 for best result. -->
       <img class="logo" src="logo.png" alt="GrayHat667 logo" width="360" height="360" />
       <div id="particleLayer" aria-hidden="true"></div>
     </button>
   </main>
+
+  <footer>
+    <a href="https://www.buymeacoffee.com/GrayHat667">
+      <img src="https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20hot%20chocolate&emoji=☕&slug=GrayHat667&button_colour=808080&font_colour=ffffff&font_family=Poppins&outline_colour=ffffff&coffee_colour=FFDD00" alt="Buy me a hot chocolate" />
+    </a>
+  </footer>
 
   <script>
     (() => {
@@ -164,31 +159,24 @@
           const el = document.createElement('div');
           el.className = 'particle';
 
-          // Random square size 4–12px
           const size = 4 + Math.random() * 8;
           el.style.width = size + 'px';
           el.style.height = size + 'px';
 
-          // Start near the center with a small spread
           const startX = rect.width * 0.5 + (Math.random() - 0.5) * rect.width * 0.4;
           const startY = rect.height * 0.5 + (Math.random() - 0.5) * rect.height * 0.2;
 
-          // End positions: fall downward with a bit of drift
           const endY = rect.height * 0.65 + Math.random() * rect.height * 0.5;
           const endX = startX + (Math.random() - 0.5) * rect.width * 0.3;
 
-          // Rotation
           const rotStart = (Math.random() * 90 - 45) + 'deg';
           const rotEnd = (Math.random() * 180 - 90) + 'deg';
 
-          // Duration 900–1800ms
           const dur = 900 + Math.random() * 900;
 
-          // Position element
           el.style.left = startX + 'px';
           el.style.top = startY + 'px';
 
-          // Custom properties to drive keyframes
           el.style.setProperty('--x', '0px');
           el.style.setProperty('--y', '0px');
           el.style.setProperty('--xend', (endX - startX) + 'px');
@@ -203,22 +191,18 @@
       }
 
       frame.addEventListener('click', () => {
-        // Small wiggle
         frame.classList.remove('wiggle');
-        void frame.offsetWidth; // reflow to restart animation
+        void frame.offsetWidth;
         frame.classList.add('wiggle');
 
-        // Particles
         spawnParticles(24);
 
-        // Easter egg message
         clicks += 1;
         if (clicks >= maxClicksForMessage) {
           msg.classList.add('show');
         }
       });
 
-      // Keyboard support: Enter/Space triggers the same behavior
       frame.addEventListener('keydown', (ev) => {
         if (ev.code === 'Space' || ev.code === 'Enter') {
           ev.preventDefault();
