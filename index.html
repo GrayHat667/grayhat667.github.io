@@ -53,8 +53,8 @@
     }
 
     .logo-frame {
-      width: 360px;
-      height: 360px;
+      width: 90px;   /* reduced to 25% of 360px */
+      height: 90px;  /* reduced to 25% of 360px */
       position: relative;
       border-radius: 0px;
       border: 2px solid transparent;
@@ -71,12 +71,12 @@
     .logo-frame:hover,
     .logo-frame:focus-visible {
       border-color: #fff;
-      box-shadow: 0 0 32px 6px rgba(255,255,255,.8), inset 0 0 0 1px rgba(255,255,255,.5);
+      box-shadow: 0 0 8px 2px rgba(255,255,255,.8), inset 0 0 0 1px rgba(255,255,255,.5); /* reduced glow to 25% */
     }
 
     .logo {
-      width: 50%;
-      height: 50%;
+      width: 100%;
+      height: 100%;
       object-fit: contain;
       display: block;
       user-select: none;
@@ -129,7 +129,7 @@
     <h1 id="easter-egg">Don't you have anything better to do?</h1>
 
     <button id="logoBtn" class="logo-frame" aria-label="Click the logo">
-      <img class="logo" src="logo.png" alt="GrayHat667 logo" width="360" height="360" />
+      <img class="logo" src="logo.png" alt="GrayHat667 logo" width="90" height="90" />
       <div id="particleLayer" aria-hidden="true"></div>
     </button>
   </main>
