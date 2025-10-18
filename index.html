@@ -1,1 +1,83 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1" /> <title>GrayHat667</title> <meta name="color-scheme" content="dark" /> <style> :root { --bg: #000; --fg: #fff; } @font-face { font-family: "Monocraft"; src: url("https://cdn.jsdelivr.net/gh/IdreesInc/Monocraft/Monocraft.ttf") format("truetype"); font-display: swap; } html, body { height: 100%; margin: 0; } body { background: var(--bg); color: var(--fg); display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif; } main { flex: 1; display: grid; place-items: center; gap: clamp(12px, 3vh, 24px); } footer { margin-bottom: 20px; } #easter-egg { font-family: "Monocraft", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: clamp(22px, 4.2vw, 64px); letter-spacing: 0.5px; text-align: center; margin: 0; opacity: 0; transform: translateY(-8px); pointer-events: none; transition: opacity .25s ease, transform .25s ease; } #easter-egg.show { opacity: 1; transform: none; } .logo-frame { width: 90px; /* reduced to 25% of 360px */ height: 90px; /* reduced to 25% of 360px */ position: relative; border-radius: 0px; border: 2px solid transparent; transition: border-color .18s ease, box-shadow .18s ease, transform .1s ease; display: grid; place-items: center; isolation: isolate; outline: none; background: transparent; padding: 0; cursor: pointer; } .logo-frame:hover, .logo-frame:focus-visible { border-color: #fff; box-shadow: 0 0 8px 2px rgba(255,255,255,.8), inset 0 0 0 1px rgba(255,255,255,.5); /* reduced glow to 25% */ } .logo { width: 100%; height: 100%; object-fit: contain; display: block; user-select: none; -webkit-user-drag: none; pointer-events: none; } #particleLayer { position: absolute; inset: 0; pointer-events: none; overflow: visible; z-index: 1; } .particle { position: absolute; background: #fff; opacity: 1; will-change: transform, opacity; animation: fall var(--dur) ease-out forwards; } @keyframes fall { 0% { transform: translate(var(--x, 0), var(--y, 0)) rotate(var(--rot, 0deg)); opacity: 1; } 100% { transform: translate(var(--xend, 0), var(--yend, 180px)) rotate(var(--rotEnd, 90deg)); opacity: 0; } } @keyframes wiggle { 0% { transform: rotate(0deg) scale(1); } 15% { transform: rotate(-4deg) scale(1.01); } 30% { transform: rotate(3deg) scale(1.01); } 45% { transform: rotate(-2deg); } 60% { transform: rotate(1.5deg); } 75% { transform: rotate(-1deg); } 100% { transform: rotate(0deg) scale(1); } } .logo-frame.wiggle { animation: wiggle 420ms ease; } @media (prefers-reduced-motion: reduce) { .logo-frame { transition: none; } .logo-frame.wiggle { animation: none; } .particle { animation: none; } } </style> </head> <body> <main> <h1 id="easter-egg">Don't you have anything better to do?</h1> <button id="logoBtn" class="logo-frame" aria-label="Click the logo"> <img class="logo" src="logo.png" alt="GrayHat667 logo" width="90" height="90" /> <div id="particleLayer" aria-hidden="true"></div> </button> </main> <footer> <a href="https://www.buymeacoffee.com/GrayHat667"> <img src="https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20hot%20chocolate&emoji=☕&slug=GrayHat667&button_colour=808080&font_colour=ffffff&font_family=Poppins&outline_colour=ffffff&coffee_colour=FFDD00" alt="Buy me a hot chocolate" /> </a> </footer> <script> (() => { const frame = document.getElementById('logoBtn'); const layer = document.getElementById('particleLayer'); const msg = document.getElementById('easter-egg'); const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; let clicks = 0; const maxClicksForMessage = 5; function spawnParticles(n = 24) { const rect = frame.getBoundingClientRect(); const isSmall = Math.min(window.innerWidth, window.innerHeight) < 500; const count = reduce ? 0 : (isSmall ? Math.ceil(n * 0.5) : n); for (let i = 0; i < count; i++) { const el = document.createElement('div'); el.className = 'particle'; const size = 4 + Math.random() * 8; el.style.width = size + 'px'; el.style.height = size + 'px'; const startX = rect.width * 0.5 + (Math.random() - 0.5) * rect.width * 0.4; const startY = rect.height * 0.5 + (Math.random() - 0.5) * rect.height * 0.2; const endY = rect.height * 0.65 + Math.random() * rect.height * 0.5; const endX = startX + (Math.random() - 0.5) * rect.width * 0.3; const rotStart = (Math.random() * 90 - 45) + 'deg'; const rotEnd = (Math.random() * 180 - 90) + 'deg'; const dur = 900 + Math.random() * 900; el.style.left = startX + 'px'; el.style.top = startY + 'px'; el.style.setProperty('--x', '0px'); el.style.setProperty('--y', '0px'); el.style.setProperty('--xend', (endX - startX) + 'px'); el.style.setProperty('--yend', (endY - startY) + 'px'); el.style.setProperty('--rot', rotStart); el.style.setProperty('--rotEnd', rotEnd); el.style.setProperty('--dur', dur + 'ms'); layer.appendChild(el); el.addEventListener('animationend', () => el.remove()); } } frame.addEventListener('click', () => { frame.classList.remove('wiggle'); void frame.offsetWidth; frame.classList.add('wiggle'); spawnParticles(24); clicks += 1; if (clicks >= maxClicksForMessage) { msg.classList.add('show'); } }); frame.addEventListener('keydown', (ev) => { if (ev.code === 'Space' || ev.code === 'Enter') { ev.preventDefault(); frame.click(); } }); })(); </script> </body> </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gray Hat</title>
+    <style>
+        @font-face {
+            font-family: "Monocraft";
+            src: url("Monocraft.ttc") format("truetype-collection");
+        }
+
+        body {
+            background-color: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: "Monocraft", monospace;
+        }
+
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2em;
+            cursor: pointer;
+            transition: text-shadow 0.3s ease, color 0.3s ease;
+        }
+
+        button:hover {
+            text-shadow: 0 0 10px white, 0 0 20px white;
+            color: #ffffff;
+        }
+
+        .secret {
+            color: transparent;
+            text-shadow: none;
+        }
+
+        .secret:hover {
+            color: white;
+            text-shadow: 0 0 10px white, 0 0 20px white;
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button id="randomVideoBtn">Random Video</button>
+        <button>Socials</button>
+        <button>Donate</button>
+        <button class="secret">???</button>
+    </div>
+
+    <script>
+        // List of video URLs
+        const videoURLs = [
+            "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+            "https://www.youtube.com/watch?v=9bZkp7q19f0",
+            "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
+            "https://www.youtube.com/watch?v=L_jWHffIx5E"
+        ];
+
+        // Get the Random Video button
+        const randomButton = document.getElementById("randomVideoBtn");
+
+        // When clicked, pick a random URL and redirect
+        randomButton.addEventListener("click", () => {
+            const randomIndex = Math.floor(Math.random() * videoURLs.length);
+            const randomURL = videoURLs[randomIndex];
+            window.location.href = randomURL; // Redirect the user
+        });
+    </script>
+</body>
+</html>
