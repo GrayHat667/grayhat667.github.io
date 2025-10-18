@@ -95,15 +95,15 @@
 
     randomButton.addEventListener("click", () => {
       const i = Math.floor(Math.random() * videoURLs.length);
-      window.location.href = videoURLs[i];
+      window.open(videoURLs[i], "_blank");
     });
 
     socialsButton.addEventListener("click", () => {
-      window.location.href = "https://x.com/GrayHat667";
+      window.open("https://x.com/GrayHat667", "_blank");
     });
 
     donateButton.addEventListener("click", () => {
-      window.location.href = "https://buymeacoffee.com/grayhat667";
+      window.open("https://buymeacoffee.com/grayhat667", "_blank");
     });
 
     const messages = [
