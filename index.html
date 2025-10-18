@@ -13,7 +13,7 @@
     body {
       background-color: #000000;
       color: white;
-      font-family: "Monocraft", monospace;
+      font-family: "Monocraft", monospace !important;
       margin: 0;
       height: 100vh;
       display: flex;
@@ -21,6 +21,10 @@
       align-items: center;
       user-select: none;
       overflow: hidden;
+    }
+
+    * {
+      font-family: "Monocraft", monospace !important;
     }
 
     .button-container {
